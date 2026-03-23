@@ -1,95 +1,101 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useCart } from "../context/CartContext";
 
 function MenuSection() {
+  const [products, setProducts] = useState([]);
+  const { addToCart } = useCart();
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/food");
+        setProducts(res.data.slice(0, 4)); // Only show top 4 on home page
+      } catch (err) {
+        console.log("Error fetching products", err);
+      }
+    };
+    fetchProducts();
+  }, []);
+
   return (
-    <section className="bg-[#f4f4f4] px-6 py-14 md:px-12 md:py-18">
+    <section className="bg-white px-6 py-12 md:px-12 md:py-16 font-sans text-gray-800">
       <div className="mx-auto w-full max-w-7xl">
-        <div className="mb-10 flex flex-col items-center justify-between gap-4 text-center md:flex-row md:text-left">
+        <div className="mb-12 flex flex-col items-center justify-between gap-6 text-center md:flex-row md:text-left">
           <div>
-            <p className="text-sm font-bold uppercase tracking-[0.18em] text-[#FF6B35]">
+            <p className="text-sm font-bold uppercase tracking-widest text-[#e25a27] mb-2">
               Available Now
             </p>
-            <h2 className="mt-2 text-3xl font-black text-slate-800 md:text-4xl">
-              Menu Section
+            <h2 className="text-4xl font-extrabold text-gray-900 md:text-5xl tracking-tight">
+              Featured Menu
             </h2>
           </div>
 
           <Link
             to="/Menu"
-            className="rounded-full border border-[#FF6B35]/40 bg-white px-6 py-3 text-sm font-bold text-slate-700 transition hover:border-[#FF6B35] hover:text-[#FF6B35]"
+            className="rounded-full border-2 border-gray-200 bg-white px-8 py-3.5 text-base font-bold text-gray-700 transition-all hover:border-[#e25a27] hover:text-[#e25a27] shadow-sm hover:shadow-md"
           >
-            Browse All
+            Browse All Menu
           </Link>
         </div>
 
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-          <article className="group relative rounded-3xl bg-white p-5 pt-14 shadow-sm ring-1 ring-black/5 transition hover:-translate-y-1 hover:shadow-xl">
-            <div className="absolute left-1/2 top-0 h-20 w-20 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full border-4 border-white bg-slate-100 shadow-md">
-              <img src="https://images.unsplash.com/photo-1528207776546-365bb710ee93?auto=format&fit=crop&w=300&q=80" alt="Pancake" className="h-full w-full object-cover" />
-            </div>
-            <button type="button" aria-label="favorite" className="absolute left-4 top-4 rounded-full border border-rose-200 bg-rose-50 px-2.5 py-1 text-sm text-rose-600">❤️</button>
-            <button type="button" className="absolute right-4 top-4 rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-700">Available</button>
-            <div className="mt-1 flex items-center justify-between">
-              <h3 className="text-2xl font-black text-slate-800">Pancake</h3>
-              <p className="text-xs font-semibold text-slate-400">10 min</p>
-            </div>
-            <p className="mt-3 min-h-20 text-sm leading-relaxed text-slate-500">Start your day right with our fluffy pancakes, served fresh every morning.</p>
-            <div className="mt-5 flex items-center justify-between gap-4">
-              <p className="text-3xl font-black text-[#B3261E]">$ 2.00</p>
-              <button type="button" className="rounded-xl bg-[#BE1E1E] px-5 py-2.5 text-sm font-bold text-white transition hover:bg-[#a81818]">add to cart +</button>
-            </div>
-          </article>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {products.map((item) => (
+            <div
+              key={item._id}
+              className="bg-white rounded-[2rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group border border-gray-50"
+            >
+              <div className="h-56 overflow-hidden relative bg-gray-100">
+                <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm text-[#e25a27] text-sm font-extrabold px-4 py-1.5 rounded-full shadow-sm z-10 border border-[#e25a27]/10">
+                  ${item.price.toFixed(2)}
+                </div>
+                <img
+                  src={`http://localhost:5000/allimages/${item.image}`}
+                  alt={item.name}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"
+                />
+              </div>
 
-          <article className="group relative rounded-3xl bg-white p-5 pt-14 shadow-sm ring-1 ring-black/5 transition hover:-translate-y-1 hover:shadow-xl">
-            <div className="absolute left-1/2 top-0 h-20 w-20 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full border-4 border-white bg-slate-100 shadow-md">
-              <img src="https://images.unsplash.com/photo-1576577445504-6af96477db52?auto=format&fit=crop&w=300&q=80" alt="Bagel" className="h-full w-full object-cover" />
-            </div>
-            <button type="button" aria-label="favorite" className="absolute left-4 top-4 rounded-full border border-slate-200 bg-slate-100 px-2.5 py-1 text-sm text-rose-600">❤️</button>
-            <button type="button" className="absolute right-4 top-4 rounded-full bg-rose-100 px-3 py-1 text-xs font-bold text-rose-700">Unavailable</button>
-            <div className="mt-1 flex items-center justify-between">
-              <h3 className="text-2xl font-black text-slate-800">Bagel</h3>
-              <p className="text-xs font-semibold text-slate-400">5 min</p>
-            </div>
-            <p className="mt-3 min-h-20 text-sm leading-relaxed text-slate-500">Delight in our freshly baked bagels, perfect for any time of day.</p>
-            <div className="mt-5 flex items-center justify-between gap-4">
-              <p className="text-3xl font-black text-[#B3261E]">$ 2.00</p>
-              <button type="button" disabled className="cursor-not-allowed rounded-xl bg-slate-300 px-5 py-2.5 text-sm font-bold text-white">unavailable</button>
-            </div>
-          </article>
+              <div className="p-6 flex flex-col flex-grow">
+                <p className="text-[#e25a27] text-xs font-bold uppercase tracking-wider mb-2">
+                  {item.category}
+                </p>
+                <h3 className="text-xl font-extrabold text-gray-900 mb-2">
+                  {item.name}
+                </h3>
+                <p className="text-gray-500 text-sm mb-6 flex-grow leading-relaxed">
+                  Carefully crafted {item.category.toLowerCase()} with the freshest ingredients to satisfy your cravings.
+                </p>
 
-          <article className="group relative rounded-3xl bg-white p-5 pt-14 shadow-sm ring-1 ring-black/5 transition hover:-translate-y-1 hover:shadow-xl">
-            <div className="absolute left-1/2 top-0 h-20 w-20 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full border-4 border-white bg-slate-100 shadow-md">
-              <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=300&q=80" alt="Cinnamon Roll" className="h-full w-full object-cover" />
+                <div className="flex justify-between items-center mt-auto border-t border-gray-100 pt-5">
+                  <span className="text-2xl font-black text-gray-900">
+                    ${item.price.toFixed(2)}
+                  </span>
+                  <button
+                    onClick={() => addToCart(item)}
+                    className="bg-[#e25a27] text-white hover:bg-[#c94a1b] px-5 py-2.5 rounded-xl font-semibold transition-all flex items-center justify-center gap-2 text-sm shadow-sm hover:shadow-md"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      className="w-4 h-4"
+                    >
+                      <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+                    </svg>
+                    Add
+                  </button>
+                </div>
+              </div>
             </div>
-            <button type="button" aria-label="favorite" className="absolute left-4 top-4 rounded-full border border-rose-200 bg-rose-50 px-2.5 py-1 text-sm text-rose-600">❤️</button>
-            <button type="button" className="absolute right-4 top-4 rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-700">Available</button>
-            <div className="mt-1 flex items-center justify-between">
-              <h3 className="text-2xl font-black text-slate-800">Cinnamon Roll</h3>
-              <p className="text-xs font-semibold text-slate-400">30 min</p>
-            </div>
-            <p className="mt-3 min-h-20 text-sm leading-relaxed text-slate-500">Celebrate the sweet indulgence of our cinnamon rolls, baked fresh daily.</p>
-            <div className="mt-5 flex items-center justify-between gap-4">
-              <p className="text-3xl font-black text-[#B3261E]">$ 2.00</p>
-              <button type="button" className="rounded-xl bg-[#BE1E1E] px-5 py-2.5 text-sm font-bold text-white transition hover:bg-[#a81818]">add to cart +</button>
-            </div>
-          </article>
+          ))}
 
-          <article className="group relative rounded-3xl bg-white p-5 pt-14 shadow-sm ring-1 ring-black/5 transition hover:-translate-y-1 hover:shadow-xl">
-            <div className="absolute left-1/2 top-0 h-20 w-20 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full border-4 border-white bg-slate-100 shadow-md">
-              <img src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?auto=format&fit=crop&w=300&q=80" alt="French Toast" className="h-full w-full object-cover" />
+          {products.length === 0 && (
+            <div className="col-span-full py-12 text-center">
+              <p className="text-gray-500 text-lg">Loading featured items...</p>
             </div>
-            <button type="button" aria-label="favorite" className="absolute left-4 top-4 rounded-full border border-slate-200 bg-slate-100 px-2.5 py-1 text-sm text-rose-600">❤️</button>
-            <button type="button" className="absolute right-4 top-4 rounded-full bg-rose-100 px-3 py-1 text-xs font-bold text-rose-700">Unavailable</button>
-            <div className="mt-1 flex items-center justify-between">
-              <h3 className="text-2xl font-black text-slate-800">French Toast</h3>
-              <p className="text-xs font-semibold text-slate-400">20 min</p>
-            </div>
-            <p className="mt-3 min-h-20 text-sm leading-relaxed text-slate-500">Savor our French toast, a breakfast classic made to perfection.</p>
-            <div className="mt-5 flex items-center justify-between gap-4">
-              <p className="text-3xl font-black text-[#B3261E]">$ 2.00</p>
-              <button type="button" disabled className="cursor-not-allowed rounded-xl bg-slate-300 px-5 py-2.5 text-sm font-bold text-white">unavailable</button>
-            </div>
-          </article>
+          )}
         </div>
       </div>
     </section>

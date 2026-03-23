@@ -1,11 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 const app = express();
 
- 
 app.use(express.json());
+app.use(cors());
 
+ app.use("/allimages", express.static("images"));
  
 const FoodRouter = require("./Router/Food");
 app.use("/food", FoodRouter);

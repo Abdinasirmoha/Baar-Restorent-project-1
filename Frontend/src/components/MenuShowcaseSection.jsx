@@ -9,21 +9,21 @@ const tiles = [
 
 function MenuShowcaseSection() {
   return (
-    <section className="bg-[#141a28] px-6 py-16 text-white md:px-12 md:py-20">
+    <section className="bg-gray-900 px-6 py-12 text-white md:px-12 md:py-16 font-sans">
       <div className="mx-auto grid w-full max-w-7xl gap-8 md:grid-cols-[1fr_1.3fr]">
         <div>
-          <p className="text-sm font-bold uppercase tracking-[0.18em] text-[#FFB800]">Menu Spotlight</p>
-          <h2 className="mt-3 text-3xl font-black leading-tight md:text-5xl">
+          <p className="text-sm font-bold uppercase tracking-widest text-[#fbbc04]">Menu Spotlight</p>
+          <h2 className="mt-3 text-4xl font-extrabold leading-tight md:text-5xl tracking-tight">
             A Different Flavor Mood in Every Category
           </h2>
-          <p className="mt-5 max-w-md text-sm leading-relaxed text-slate-300">
+          <p className="mt-5 max-w-md text-sm leading-relaxed text-gray-400">
             Pick your craving, from grilled classics to crunchy favorites and sweet endings.
             Every category is designed for a premium taste experience.
           </p>
 
           <Link
             to="/Menu"
-            className="mt-8 inline-flex rounded-full bg-[#FF6B35] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#e85b29]"
+            className="mt-8 inline-flex rounded-full bg-[#e25a27] px-8 py-3.5 text-base font-bold text-white transition hover:bg-[#c94a1b] shadow-lg shadow-[#e25a27]/20"
           >
             View Full Categories
           </Link>
@@ -33,14 +33,14 @@ function MenuShowcaseSection() {
           {tiles.map((tile, idx) => (
             <article
               key={tile.title}
-              className={`${tile.size} relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-[#1e2536] to-[#111826] p-6`}
+              className={`${tile.size} relative overflow-hidden rounded-3xl border border-white/5 bg-gradient-to-br from-gray-800 to-gray-900 p-6 shadow-xl`}
             >
               <div
                 className={`absolute -right-8 -top-8 h-24 w-24 rounded-full blur-2xl ${
-                  idx % 2 === 0 ? "bg-[#FFB800]/35" : "bg-[#FF6B35]/35"
+                  idx % 2 === 0 ? "bg-[#fbbc04]/30" : "bg-[#e25a27]/30"
                 }`}
               ></div>
-              <p className="relative z-10 text-xs font-bold uppercase tracking-[0.2em] text-slate-300">
+              <p className="relative z-10 text-xs font-bold uppercase tracking-widest text-[#fbbc04]">
                 {tile.tag}
               </p>
               <h3 className="relative z-10 mt-2 text-2xl font-extrabold">{tile.title}</h3>

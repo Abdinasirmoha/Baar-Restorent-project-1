@@ -9,8 +9,8 @@ function Home(){
     return(
         <>
         <Herosection />
+         <MenuSection />
         <FivePartSection />
-        <MenuSection />
         <ServiceFlowSection />
         <MenuShowcaseSection />
         <ReservationSection />

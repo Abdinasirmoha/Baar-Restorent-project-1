@@ -19,31 +19,31 @@ const steps = [
 
 function ServiceFlowSection() {
   return (
-    <section className="bg-white px-6 py-14 md:px-12 md:py-18">
+    <section className="bg-white px-6 py-12 md:px-12 md:py-16 font-sans">
       <div className="mx-auto w-full max-w-7xl">
         <div className="mb-10 flex items-end justify-between gap-6">
           <div>
-            <p className="text-sm font-bold uppercase tracking-[0.18em] text-[#FF6B35]">How It Works</p>
-            <h2 className="mt-2 text-3xl font-black text-slate-800 md:text-4xl">
+            <p className="text-sm font-bold uppercase tracking-widest text-[#e25a27]">How It Works</p>
+            <h2 className="mt-2 text-3xl font-extrabold text-gray-900 md:text-5xl tracking-tight">
               From Order to Table in 4 Steps
             </h2>
           </div>
-          <p className="hidden max-w-md text-right text-sm text-slate-500 md:block">
+          <p className="hidden max-w-md text-right text-sm text-gray-500 md:block leading-relaxed">
             Clean workflow, transparent tracking, and delicious outcomes at every step.
           </p>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
           {steps.map((step, index) => (
             <article
               key={step.title}
-              className="rounded-2xl border border-orange-100 bg-[#fffaf3] p-5 transition hover:-translate-y-1 hover:shadow-lg"
+              className="rounded-3xl border border-gray-100 bg-[#fcfaf8] p-6 transition hover:-translate-y-1 hover:shadow-lg hover:border-[#e25a27]/20"
             >
-              <p className="mb-4 inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#FFB800] text-sm font-black text-slate-800">
+              <p className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#e25a27] text-white text-sm font-black shadow-sm shadow-[#e25a27]/30">
                 {index + 1}
               </p>
-              <h3 className="text-lg font-extrabold text-slate-800">{step.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-slate-500">{step.detail}</p>
+              <h3 className="text-xl font-extrabold text-gray-900">{step.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-gray-500">{step.detail}</p>
             </article>
           ))}
         </div>
