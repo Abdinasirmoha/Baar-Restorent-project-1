@@ -10,6 +10,8 @@ app.use(cors());
  app.use("/allimages", express.static("images"));
  
 const FoodRouter = require("./Router/Food");
+app.use("/orders", require("./Router/orderRoutes"));
+
 app.use("/food", FoodRouter);
  
 mongoose.connect("mongodb://localhost:27017/Restorent")

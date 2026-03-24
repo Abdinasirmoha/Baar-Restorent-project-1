@@ -45,10 +45,10 @@ function Header() {
           
           <li>
             <Link 
-              to="/Admin" 
-              className={`transition hover:text-[#e25a27] pb-1 ${isActive('/Admin') ? 'text-[#e25a27] border-b-2 border-[#e25a27]' : ''}`}
+              to="/Dashboard" 
+              className={`transition hover:text-[#e25a27] pb-1 ${isActive('/Dashboard') ? 'text-[#e25a27] border-b-2 border-[#e25a27]' : ''}`}
             >
-              Admin
+              Dashboard
             </Link>
           </li>
         </ul>
