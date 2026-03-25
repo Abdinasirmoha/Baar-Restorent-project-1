@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function Herosection() {
   return (
-    <section className="relative overflow-hidden bg-white px-6 py-12 md:px-12 md:py-16 font-sans">
+    <section className="relative overflow-hidden bg-white px-6 py-12 md:px-12 md:py-12 font-sans">
       <div className="pointer-events-none absolute -left-24 top-12 h-64 w-64 rounded-full bg-[#fbbc04]/20 blur-3xl"></div>
       <div className="pointer-events-none absolute -right-20 bottom-0 h-80 w-80 rounded-full bg-[#e25a27]/20 blur-3xl"></div>
 
@@ -13,9 +13,9 @@ function Herosection() {
             Freshly Crafted Flavor
           </span>
 
-          <h1 className="mt-5 text-5xl font-extrabold leading-tight text-gray-900 md:text-7xl tracking-tight">
+          <h1 className="mt-3 text-5xl font-extrabold leading-tight text-gray-900 md:text-6xl tracking-tight">
             The Pleasant Experience
-            <span className="block text-[#e25a27] mt-2">
+            <span className="block text-[#e25a27] ">
               to Your Taste Buds
             </span>
           </h1>

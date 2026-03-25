@@ -1,11 +1,13 @@
 import { Link, useLocation } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+import { useLanguage } from "../context/LanguageContext";
 
 function Header() {
   const location = useLocation();
   const { totalItems } = useCart();
+  const { t } = useLanguage();
 
-  const isActive = (path) => location.pathname === path;
+  const isActive = (path, alt) => location.pathname === path || (alt && location.pathname === alt);
 
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-gray-100">
@@ -31,7 +33,7 @@ function Header() {
               to="/" 
               className={`transition hover:text-[#e25a27] pb-1 ${isActive('/') ? 'text-[#e25a27] border-b-2 border-[#e25a27]' : ''}`}
             >
-              Home
+              {t("home")}
             </Link>
           </li>
           <li>
@@ -39,18 +41,18 @@ function Header() {
               to="/Menu" 
               className={`transition hover:text-[#e25a27] pb-1 ${isActive('/Menu') ? 'text-[#e25a27] border-b-2 border-[#e25a27]' : ''}`}
             >
-              Menu
+              {t("menu")}
             </Link>
           </li>
-          
           <li>
             <Link 
               to="/Dashboard" 
               className={`transition hover:text-[#e25a27] pb-1 ${isActive('/Dashboard') ? 'text-[#e25a27] border-b-2 border-[#e25a27]' : ''}`}
             >
-              Dashboard
+              {t("dashboard")}
             </Link>
           </li>
+          
         </ul>
 
         {/* Right Section: Icons & Auth Buttons */}
@@ -78,13 +80,13 @@ function Header() {
             to="/Register"
             className="hidden text-base font-bold text-gray-600 hover:text-[#e25a27] transition md:inline-flex"
           >
-            Register
+            {t("register")}
           </Link>
           <Link
             to="/Login"
             className="hidden rounded-full bg-[#e25a27] px-6 py-2.5 text-base font-bold text-white transition hover:bg-[#c94a1b] md:inline-flex shadow-sm shadow-[#e25a27]/20"
           >
-            Login
+            {t("login")}
           </Link>
         </div>
       </nav>
