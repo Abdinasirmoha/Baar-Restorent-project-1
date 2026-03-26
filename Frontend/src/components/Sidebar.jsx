@@ -165,6 +165,12 @@ export default function Sidebar({ className = "" }) {
     }
   }, [isMenuSectionActive, activeMenuSection, menuSectionStorageKey]);
 
+  const handleLogout = () => {
+    window.localStorage.removeItem("adminProfile");
+    window.localStorage.removeItem("cart");
+    window.localStorage.removeItem("appLastPage");
+  };
+
   return (
     <aside
       className={`sticky top-0 self-start w-64 rounded-[2.5rem] border border-[#f1f2f6] bg-white px-5 py-8 shadow-[0_25px_60px_rgba(15,23,42,0.08)] ${className}`}
@@ -290,6 +296,29 @@ export default function Sidebar({ className = "" }) {
             </Link>
           );
         })}
+
+        <Link
+          to="/Login"
+          onClick={handleLogout}
+          className="mt-2 flex items-center gap-3 rounded-[18px] px-4 py-3 text-sm font-semibold text-[#d4551b] transition hover:bg-[#ffe2d5]"
+        >
+          <span className="flex h-10 w-10 items-center justify-center rounded-full border border-[#f7c7b3] bg-[#fff4ef]">
+            <svg
+              className="h-5 w-5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2.2}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+              <path d="m16 17 5-5-5-5" />
+              <path d="M21 12H9" />
+            </svg>
+          </span>
+          <span>Logout</span>
+        </Link>
       </nav>
     </aside>
   );

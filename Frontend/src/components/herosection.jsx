@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function Herosection() {
   return (
-    <section className="relative overflow-hidden bg-white px-6 py-12 md:px-12 md:py-12 font-sans">
+    <section className="relative overflow-hidden bg-white px-6 py-12 md:px-12 md:py-28 font-sans">
       <div className="pointer-events-none absolute -left-24 top-12 h-64 w-64 rounded-full bg-[#fbbc04]/20 blur-3xl"></div>
       <div className="pointer-events-none absolute -right-20 bottom-0 h-80 w-80 rounded-full bg-[#e25a27]/20 blur-3xl"></div>
 
