@@ -11,6 +11,7 @@ app.use(cors());
  
 const FoodRouter = require("./Router/Food");
 app.use("/orders", require("./Router/orderRoutes"));
+app.use("/categories", require("./Router/categoryRoutes"));
 
 app.use("/food", FoodRouter);
  

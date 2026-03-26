@@ -16,6 +16,7 @@ import Messages from "./Pages/Messages"
 import POS from "./Pages/POS"
 import Analytics from "./Pages/Analytics"
 import Settings from "./Pages/Settings"
+import Checkout from "./Pages/Checkout"
 import Footer from "./components/Footer"
 import { Routes,Route,useLocation } from "react-router-dom"
 
@@ -73,6 +74,7 @@ function App() {
       <Route path="/MenuManagement/List" element={<MenuList />} />
       <Route path="/MenuManagement/Categories" element={<MenuCategories />} />
       <Route path="/Cart" element={<Cart/>} />
+      <Route path="/Checkout" element={<Checkout/>} />
       <Route path="/Login" element={<Login/>} />
       <Route path="/Register" element={<Register/>} />
       <Route path="/Profile" element={<Profile/>} />

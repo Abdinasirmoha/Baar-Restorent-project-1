@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+import { API_BASE_URL } from "../config/api";
 
 export default function Cart() {
   const { cart, removeFromCart, updateQuantity, clearCart, totalPrice } = useCart();
@@ -43,7 +44,7 @@ export default function Cart() {
                 {cart.map((item) => (
                   <div key={item._id} className="flex flex-col sm:flex-row items-center gap-6 group">
                     <img 
-                      src={`http://localhost:5000/allimages/${item.image}`} 
+                      src={item.image ? `${API_BASE_URL}/allimages/${item.image}` : "https://placehold.co/300x300?text=Food"}
                       alt={item.name} 
                       className="w-36 h-36 rounded-[1.5rem] object-cover bg-gray-100 shadow-sm"
                     />
@@ -108,12 +109,15 @@ export default function Cart() {
                 </div>
               </div>
 
-              <button className="w-full bg-[#e25a27] text-white py-5 rounded-2xl font-bold text-xl hover:bg-[#c94a1b] transition-colors shadow-2xl shadow-[#e25a27]/30 hover:shadow-[#e25a27]/50 flex justify-center items-center gap-3">
+              <Link
+                to="/Checkout"
+                className="w-full bg-[#e25a27] text-white py-5 rounded-2xl font-bold text-xl hover:bg-[#c94a1b] transition-colors shadow-2xl shadow-[#e25a27]/30 hover:shadow-[#e25a27]/50 flex justify-center items-center gap-3"
+              >
                 Proceed to Checkout
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-6 h-6">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
                 </svg>
-              </button>
+              </Link>
             </div>
           </div>
         </div>

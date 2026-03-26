@@ -2,22 +2,30 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useCart } from "../context/CartContext";
+import { API_BASE_URL } from "../config/api";
 
-function MenuSection() {
+function MenuSection({ showAll = false }) {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const { addToCart } = useCart();
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/food");
-        setProducts(res.data.slice(0, 4)); // Only show top 4 on home page
+        setLoading(true);
+        const res = await axios.get(`${API_BASE_URL}/food`);
+        const items = Array.isArray(res.data) ? res.data : [];
+        setProducts(showAll ? items : items.slice(0, 4));
+        setError("");
       } catch (err) {
-        console.log("Error fetching products", err);
+        setError("Failed to load menu items.");
+      } finally {
+        setLoading(false);
       }
     };
     fetchProducts();
-  }, []);
+  }, [showAll]);
 
   return (
     <section className="bg-white px-6 py-12 md:px-12 md:py-16 font-sans text-gray-800">
@@ -32,12 +40,14 @@ function MenuSection() {
             </h2>
           </div>
 
-          <Link
-            to="/Menu"
-            className="rounded-full border-2 border-gray-200 bg-white px-8 py-3.5 text-base font-bold text-gray-700 transition-all hover:border-[#e25a27] hover:text-[#e25a27] shadow-sm hover:shadow-md"
-          >
-            Browse All Menu
-          </Link>
+          {!showAll && (
+            <Link
+              to="/Menu"
+              className="rounded-full border-2 border-gray-200 bg-white px-8 py-3.5 text-base font-bold text-gray-700 transition-all hover:border-[#e25a27] hover:text-[#e25a27] shadow-sm hover:shadow-md"
+            >
+              Browse All Menu
+            </Link>
+          )}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -51,7 +61,7 @@ function MenuSection() {
                   ${item.price.toFixed(2)}
                 </div>
                 <img
-                  src={`http://localhost:5000/allimages/${item.image}`}
+                  src={item.image ? `${API_BASE_URL}/allimages/${item.image}` : "https://placehold.co/600x400?text=Food"}
                   alt={item.name}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"
                 />
@@ -91,9 +101,21 @@ function MenuSection() {
             </div>
           ))}
 
-          {products.length === 0 && (
+          {loading && (
             <div className="col-span-full py-12 text-center">
               <p className="text-gray-500 text-lg">Loading featured items...</p>
+            </div>
+          )}
+
+          {!loading && error && (
+            <div className="col-span-full py-12 text-center">
+              <p className="text-red-500 text-lg">{error}</p>
+            </div>
+          )}
+
+          {!loading && !error && products.length === 0 && (
+            <div className="col-span-full py-12 text-center">
+              <p className="text-gray-500 text-lg">No menu items found.</p>
             </div>
           )}
         </div>
