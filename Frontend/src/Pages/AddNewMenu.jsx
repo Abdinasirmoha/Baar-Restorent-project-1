@@ -10,6 +10,7 @@ export default function AddNewMenu() {
     category: "",
     price: "",
     image: null,
+    status: "AVAILABLE",
   });
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
@@ -55,6 +56,7 @@ export default function AddNewMenu() {
       payload.append("name", form.name);
       payload.append("category", form.category);
       payload.append("price", form.price);
+      payload.append("status", form.status);
       if (form.image) {
         payload.append("image", form.image);
       }
@@ -66,7 +68,7 @@ export default function AddNewMenu() {
       });
 
       setMessage("Menu item created successfully.");
-      setForm({ name: "", category: "", price: "", image: null });
+      setForm({ name: "", category: "", price: "", image: null, status: "AVAILABLE" });
     } catch (err) {
       setError(err?.response?.data?.message || "Failed to create menu item.");
     } finally {
@@ -124,6 +126,15 @@ export default function AddNewMenu() {
                 className="rounded-xl border border-[#e5e8f2] px-4 py-3 text-sm outline-none"
                 placeholder="Price"
               />
+              <select
+                name="status"
+                value={form.status}
+                onChange={onChange}
+                className="rounded-xl border border-[#e5e8f2] px-4 py-3 text-sm outline-none"
+              >
+                <option value="AVAILABLE">Available</option>
+                <option value="UNAVAILABLE">Unavailable</option>
+              </select>
               <input
                 name="image"
                 onChange={onChange}

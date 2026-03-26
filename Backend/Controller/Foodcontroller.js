@@ -1,12 +1,22 @@
 const modelschuma = require("../model/Food");
 
+const normalizeStatus = (value) => {
+  if (typeof value !== "string") {
+    return "AVAILABLE";
+  }
+
+  const normalized = value.trim().toUpperCase();
+  return normalized === "UNAVAILABLE" ? "UNAVAILABLE" : "AVAILABLE";
+};
+
 const create = async (req, res) => {
   try {
     const newitem = await modelschuma.create({
       name: req.body.name,
       price: req.body.price,
       image: req.file ? req.file.filename : req.body.image || "",
-      category: req.body.category
+      category: req.body.category,
+      status: normalizeStatus(req.body.status)
     });
 
     res.status(201).json(newitem);
@@ -54,6 +64,10 @@ const Updatefoodt=async (req,res)=>{
         const updateData = {
           ...req.body,
         };
+
+        if (Object.prototype.hasOwnProperty.call(updateData, "status")) {
+          updateData.status = normalizeStatus(updateData.status);
+        }
 
         if (req.file) {
           updateData.image = req.file.filename;

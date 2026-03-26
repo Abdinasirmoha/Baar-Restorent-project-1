@@ -34,6 +34,26 @@ export default function MenuList() {
     }
   };
 
+  const toggleAvailability = async (item) => {
+    const currentStatus = String(item.status || "AVAILABLE").toUpperCase();
+    const nextStatus = currentStatus === "UNAVAILABLE" ? "AVAILABLE" : "UNAVAILABLE";
+
+    try {
+      const res = await axios.put(`${API_BASE_URL}/food/${item._id}`, { status: nextStatus });
+      const updated = res.data;
+
+      setMenus((prev) =>
+        prev.map((menuItem) =>
+          menuItem._id === item._id
+            ? { ...menuItem, status: String(updated?.status || nextStatus).toUpperCase() }
+            : menuItem
+        )
+      );
+    } catch {
+      setError("Failed to update menu availability.");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#f2f4fb] px-6 py-6">
       <div className="flex items-start gap-6">
@@ -53,11 +73,15 @@ export default function MenuList() {
                     <th className="px-5 py-3">Name</th>
                     <th className="px-5 py-3">Category</th>
                     <th className="px-5 py-3">Price</th>
+                    <th className="px-5 py-3">Status</th>
                     <th className="px-5 py-3">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {!loading && menus.map((item) => (
+                    (() => {
+                      const isAvailable = !item.status || String(item.status).toUpperCase() === "AVAILABLE";
+                      return (
                     <tr key={item._id} className="border-t border-[#eef1f7]">
                       <td className="px-5 py-3">
                         <img
@@ -70,34 +94,58 @@ export default function MenuList() {
                       <td className="px-5 py-3 text-gray-600">{item.category}</td>
                       <td className="px-5 py-3 text-gray-900">${Number(item.price || 0).toFixed(2)}</td>
                       <td className="px-5 py-3">
-                        <button
-                          type="button"
-                          onClick={() => handleDelete(item._id)}
-                          className="rounded-lg p-2 text-red-500 hover:bg-red-50"
-                          aria-label={`Delete ${item.name}`}
-                          title="Delete item"
+                        <span
+                          className={`inline-flex rounded-full px-3 py-1 text-xs font-bold ${
+                            isAvailable ? "bg-emerald-100 text-emerald-700" : "bg-rose-100 text-rose-700"
+                          }`}
                         >
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M3 6h18" />
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M8 6V4h8v2" />
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M19 6l-1 14H6L5 6" />
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M10 11v6" />
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M14 11v6" />
-                          </svg>
-                        </button>
+                          {isAvailable ? "Available" : "Unavailable"}
+                        </span>
+                      </td>
+                      <td className="px-5 py-3">
+                        <div className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={() => toggleAvailability(item)}
+                            className={`rounded-lg px-3 py-2 text-xs font-semibold ${
+                              isAvailable
+                                ? "bg-amber-100 text-amber-700 hover:bg-amber-200"
+                                : "bg-emerald-100 text-emerald-700 hover:bg-emerald-200"
+                            }`}
+                          >
+                            {isAvailable ? "Mark Unavailable" : "Mark Available"}
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleDelete(item._id)}
+                            className="rounded-lg p-2 text-red-500 hover:bg-red-50"
+                            aria-label={`Delete ${item.name}`}
+                            title="Delete item"
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M3 6h18" />
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M8 6V4h8v2" />
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M19 6l-1 14H6L5 6" />
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M10 11v6" />
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M14 11v6" />
+                            </svg>
+                          </button>
+                        </div>
                       </td>
                     </tr>
+                      );
+                    })()
                   ))}
 
                   {!loading && menus.length === 0 && (
                     <tr className="border-t border-[#eef1f7]">
-                      <td colSpan={5} className="px-5 py-6 text-center text-gray-500">No menu items found.</td>
+                      <td colSpan={6} className="px-5 py-6 text-center text-gray-500">No menu items found.</td>
                     </tr>
                   )}
 
                   {loading && (
                     <tr className="border-t border-[#eef1f7]">
-                      <td colSpan={5} className="px-5 py-6 text-center text-gray-500">Loading menu items...</td>
+                      <td colSpan={6} className="px-5 py-6 text-center text-gray-500">Loading menu items...</td>
                     </tr>
                   )}
                 </tbody>

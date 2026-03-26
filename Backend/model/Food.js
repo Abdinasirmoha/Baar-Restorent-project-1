@@ -16,6 +16,11 @@ const FoodSchema = new mongoose.Schema({
   category: {
     type: String,
     required: true
+  },
+  status: {
+    type: String,
+    enum: ["AVAILABLE", "UNAVAILABLE"],
+    default: "AVAILABLE"
   }
 });
 
