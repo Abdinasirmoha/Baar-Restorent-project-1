@@ -12,6 +12,7 @@ const orderSchema = new mongoose.Schema(
         name: String,
         price: Number,
         quantity: Number,
+        image: String,
       },
     ],
 
@@ -23,6 +24,21 @@ const orderSchema = new mongoose.Schema(
     address: {
       type: String,
       required: true,
+    },
+
+    fullName: {
+      type: String,
+      default: "Walk-in Customer"
+    },
+
+    phone: {
+      type: String,
+      default: "N/A"
+    },
+
+    paymentMethod: {
+      type: String,
+      default: "cod" // 'cod' or 'card'
     },
 
     status: {

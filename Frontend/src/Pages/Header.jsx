@@ -44,12 +44,13 @@ function Header() {
               {t("menu")}
             </Link>
           </li>
+           
           <li>
             <Link 
-              to="/Dashboard" 
-              className={`transition hover:text-[#e25a27] pb-1 ${isActive('/Dashboard') ? 'text-[#e25a27] border-b-2 border-[#e25a27]' : ''}`}
+              to="/Contact" 
+              className={`transition hover:text-[#e25a27] pb-1 ${isActive('/Contact') ? 'text-[#e25a27] border-b-2 border-[#e25a27]' : ''}`}
             >
-              {t("dashboard")}
+              Contact
             </Link>
           </li>
           

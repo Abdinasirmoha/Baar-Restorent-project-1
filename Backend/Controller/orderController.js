@@ -4,7 +4,7 @@ const Food = require("../model/Food");
 // CREATE ORDER
 exports.createOrder = async (req, res) => {
   try {
-    const { items, address } = req.body;
+    const { items, address, fullName, paymentMethod, phone } = req.body;
 
     let orderItems = [];
     let total = 0;
@@ -21,6 +21,7 @@ exports.createOrder = async (req, res) => {
         name: food.name,
         price: food.price,
         quantity: item.quantity,
+        image: food.image,
       };
 
       orderItems.push(newItem);
@@ -32,6 +33,9 @@ exports.createOrder = async (req, res) => {
       items: orderItems,
       total,
       address,
+      fullName: fullName || "Walk-in Customer",
+      phone: phone || "N/A",
+      paymentMethod: paymentMethod || "cod",
     });
 
     const savedOrder = await order.save();

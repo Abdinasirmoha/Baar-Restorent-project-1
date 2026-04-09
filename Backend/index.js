@@ -12,6 +12,9 @@ app.use(cors());
 const FoodRouter = require("./Router/Food");
 app.use("/orders", require("./Router/orderRoutes"));
 app.use("/categories", require("./Router/categoryRoutes"));
+app.use("/messages", require("./Router/MessageRoute"));
+app.use("/admin", require("./Router/adminRoute"));
+app.use("/users", require("./Router/userRoute"));
 
 app.use("/food", FoodRouter);
  
