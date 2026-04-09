@@ -234,34 +234,6 @@ export default function Sidebar({ className = "" }) {
               {item.icon}
               {!isCollapsed && <span>{t(item.labelKey)}</span>}
             </Link>
-<<<<<<< HEAD
-          );
-        })}
-
-        <Link
-          to="/Login"
-          onClick={handleLogout}
-          className="mt-2 flex items-center gap-3 rounded-[18px] px-4 py-3 text-sm font-semibold text-[#d4551b] transition hover:bg-[#ffe2d5]"
-        >
-          <span className="flex h-10 w-10 items-center justify-center rounded-full border border-[#f7c7b3] bg-[#fff4ef]">
-            <svg
-              className="h-5 w-5"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2.2}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-              <path d="m16 17 5-5-5-5" />
-              <path d="M21 12H9" />
-            </svg>
-          </span>
-          <span>Logout</span>
-        </Link>
-      </nav>
-=======
           ))}
         </nav>
       </div>
@@ -272,17 +244,16 @@ export default function Sidebar({ className = "" }) {
             <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line>
             </svg>
-            {!isCollapsed && <span>Help</span>}
+            {!isCollapsed && <span>{t("help", "Help")}</span>}
          </Link>
          
-         <button className={`flex items-center gap-3 w-full rounded-xl px-4 py-3 text-[14px] font-medium transition-all duration-200 text-[#64748b] hover:bg-red-50 hover:text-red-500 ${isCollapsed ? 'justify-center px-0' : ''}`} title="Log out">
+         <Link to="/Login" onClick={handleLogout} className={`flex items-center gap-3 w-full rounded-xl px-4 py-3 text-[14px] font-medium transition-all duration-200 text-[#64748b] hover:bg-red-50 hover:text-red-500 ${isCollapsed ? 'justify-center px-0' : ''}`} title="Log out">
             <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line>
             </svg>
-            {!isCollapsed && <span>Log out</span>}
-         </button>
+            {!isCollapsed && <span>{t("logout", "Log out")}</span>}
+         </Link>
       </div>
->>>>>>> 4e08181 (project restorent waa dhameystirnay)
     </aside>
   );
 }

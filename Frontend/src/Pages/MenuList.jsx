@@ -94,7 +94,6 @@ export default function MenuList() {
     }
   };
 
-<<<<<<< HEAD
   const toggleAvailability = async (item) => {
     const currentStatus = String(item.status || "AVAILABLE").toUpperCase();
     const nextStatus = currentStatus === "UNAVAILABLE" ? "AVAILABLE" : "UNAVAILABLE";
@@ -114,108 +113,18 @@ export default function MenuList() {
       setError("Failed to update menu availability.");
     }
   };
-=======
+
   const filteredMenus = menus.filter(
     (item) =>
-      item.name.toLowerCase().includes(search.toLowerCase()) ||
-      item.category.toLowerCase().includes(search.toLowerCase())
+      (item.name || "").toLowerCase().includes(search.toLowerCase()) ||
+      (item.category || "").toLowerCase().includes(search.toLowerCase())
   );
->>>>>>> 4e08181 (project restorent waa dhameystirnay)
 
   return (
     <div className="flex bg-[#f4f6fa] min-h-screen font-sans text-[#1c1e27]">
       {/* Sidebar matching the Dashboard format */}
       <Sidebar className="m-6 h-[calc(100vh-3rem)] shrink-0 shadow-[0_10px_40px_rgba(0,0,0,0.04)]" />
 
-<<<<<<< HEAD
-            {error && <p className="mt-6 text-sm font-semibold text-red-500">{error}</p>}
-
-            <div className="mt-8 overflow-hidden rounded-2xl border border-[#e8ebf5]">
-              <table className="w-full text-left text-sm">
-                <thead className="bg-[#f7f8fc] text-gray-500">
-                  <tr>
-                    <th className="px-5 py-3">Image</th>
-                    <th className="px-5 py-3">Name</th>
-                    <th className="px-5 py-3">Category</th>
-                    <th className="px-5 py-3">Price</th>
-                    <th className="px-5 py-3">Status</th>
-                    <th className="px-5 py-3">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {!loading && menus.map((item) => (
-                    (() => {
-                      const isAvailable = !item.status || String(item.status).toUpperCase() === "AVAILABLE";
-                      return (
-                    <tr key={item._id} className="border-t border-[#eef1f7]">
-                      <td className="px-5 py-3">
-                        <img
-                          src={item.image ? `${API_BASE_URL}/allimages/${item.image}` : "https://placehold.co/100x100?text=Food"}
-                          alt={item.name}
-                          className="h-14 w-14 rounded-xl object-cover border border-[#edf0f6]"
-                        />
-                      </td>
-                      <td className="px-5 py-3 font-semibold text-gray-800">{item.name}</td>
-                      <td className="px-5 py-3 text-gray-600">{item.category}</td>
-                      <td className="px-5 py-3 text-gray-900">${Number(item.price || 0).toFixed(2)}</td>
-                      <td className="px-5 py-3">
-                        <span
-                          className={`inline-flex rounded-full px-3 py-1 text-xs font-bold ${
-                            isAvailable ? "bg-emerald-100 text-emerald-700" : "bg-rose-100 text-rose-700"
-                          }`}
-                        >
-                          {isAvailable ? "Available" : "Unavailable"}
-                        </span>
-                      </td>
-                      <td className="px-5 py-3">
-                        <div className="flex items-center gap-2">
-                          <button
-                            type="button"
-                            onClick={() => toggleAvailability(item)}
-                            className={`rounded-lg px-3 py-2 text-xs font-semibold ${
-                              isAvailable
-                                ? "bg-amber-100 text-amber-700 hover:bg-amber-200"
-                                : "bg-emerald-100 text-emerald-700 hover:bg-emerald-200"
-                            }`}
-                          >
-                            {isAvailable ? "Mark Unavailable" : "Mark Available"}
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => handleDelete(item._id)}
-                            className="rounded-lg p-2 text-red-500 hover:bg-red-50"
-                            aria-label={`Delete ${item.name}`}
-                            title="Delete item"
-                          >
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M3 6h18" />
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M8 6V4h8v2" />
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M19 6l-1 14H6L5 6" />
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M10 11v6" />
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M14 11v6" />
-                            </svg>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                      );
-                    })()
-                  ))}
-
-                  {!loading && menus.length === 0 && (
-                    <tr className="border-t border-[#eef1f7]">
-                      <td colSpan={6} className="px-5 py-6 text-center text-gray-500">No menu items found.</td>
-                    </tr>
-                  )}
-
-                  {loading && (
-                    <tr className="border-t border-[#eef1f7]">
-                      <td colSpan={6} className="px-5 py-6 text-center text-gray-500">Loading menu items...</td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-=======
       {/* Main Content Area */}
       <main className="flex-1 p-8 lg:p-12 overflow-y-auto ml-2">
         <div className="max-w-[1400px] mx-auto">
@@ -227,7 +136,6 @@ export default function MenuList() {
                 <h1 className="text-3xl font-extrabold tracking-tight mb-1 text-[#1a1c29]">Menu List</h1>
                 <p className="text-[#848796] text-sm font-semibold tracking-wide">Manage your restaurant offerings</p>
               </div>
->>>>>>> 4e08181 (project restorent waa dhameystirnay)
             </div>
 
             <div className="flex flex-wrap items-center justify-between gap-4 bg-transparent">
@@ -307,7 +215,9 @@ export default function MenuList() {
             )}
 
             {/* List Rows */}
-            {!loading && filteredMenus.map((item) => (
+            {!loading && filteredMenus.map((item) => {
+              const isAvailable = !item.status || String(item.status).toUpperCase() === "AVAILABLE";
+              return (
               <div 
                 key={item._id} 
                 className="bg-white rounded-[1.5rem] p-4 flex items-center shadow-[0_4px_15px_rgba(0,0,0,0.02)] border border-[#ffffff] transition-all duration-300 hover:shadow-[0_12px_35px_rgba(0,0,0,0.06)] hover:-translate-y-0.5"
@@ -340,8 +250,12 @@ export default function MenuList() {
 
                 {/* Status */}
                 <div className="w-[15%] flex justify-center">
-                  <span className="bg-[#eeffee] border border-[#b2f0b2] text-[#009e2a] font-black text-[10px] px-3.5 py-1.5 rounded-md uppercase tracking-wider shadow-sm">
-                    Activated
+                  <span className={`border font-black text-[10px] px-3.5 py-1.5 rounded-md uppercase tracking-wider shadow-sm ${
+                    isAvailable 
+                      ? "bg-[#eeffee] border-[#b2f0b2] text-[#009e2a]" 
+                      : "bg-[#ffeeee] border-[#ffb2b2] text-[#d40000]"
+                  }`}>
+                    {isAvailable ? "AVAILABLE" : "UNAVAILABLE"}
                   </span>
                 </div>
 
@@ -354,7 +268,16 @@ export default function MenuList() {
                 </div>
 
                 {/* Actions */}
-                <div className="w-[10%] flex justify-center items-center gap-3">
+                <div className="w-[10%] flex justify-center items-center gap-2">
+                  <button 
+                    onClick={() => toggleAvailability(item)}
+                    title={isAvailable ? "Mark Unavailable" : "Mark Available"}
+                    className="w-9 h-9 flex justify-center items-center rounded-[10px] bg-white border border-[#eaeef3] text-[#6d7183] hover:text-[#f7a915] hover:border-[#f7a915] hover:bg-[#fff9ea] transition-all shadow-sm"
+                  >
+                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path><line x1="12" y1="2" x2="12" y2="12"></line>
+                    </svg>
+                  </button>
                   <button 
                     onClick={() => handleEditClick(item)}
                     className="w-9 h-9 flex justify-center items-center rounded-[10px] bg-white border border-[#eaeef3] text-[#6d7183] hover:text-[#3b66df] hover:border-[#3b66df] hover:bg-[#f0f4ff] transition-all shadow-sm"
@@ -375,7 +298,8 @@ export default function MenuList() {
                   </button>
                 </div>
               </div>
-            ))}
+            );
+            })}
           </div>
 
         </div>
